@@ -1,0 +1,106 @@
+import Chart from "react-apexcharts";
+import { useGetUsersQuery } from "../../redux/api/usersApiSlice";
+import {
+  useGetTotalOrdersQuery,
+  useGetTotalSalesByDateQuery,
+  useGetTotalSalesQuery,
+} from "../../redux/api/orderApiSlice";
+
+import { useState, useEffect } from 'react'
+import AdminMenu from "./AdminMenu";
+import Loader from "../../componenets/Loader"; // Fixed spelling
+import OrderList from "./OrderList";
+
+function AdminDashboard() {
+  const { data: sales, isLoading } = useGetTotalSalesQuery()
+  const { data: customers, isLoading: loadingCustomers } = useGetUsersQuery()
+  const { data: orders, isLoading: loadingOrders } = useGetTotalOrdersQuery()
+  const { data: salesDetails } = useGetTotalSalesByDateQuery()
+
+  const [state, setState] = useState({
+    options: {
+      chart: { type: "line" },
+      tooltip: { theme: "dark" },
+      colors: ["#00E396"], // Fixed $ to #
+      dataLabels: { enabled: true },
+      stroke: { curve: "smooth" },
+      title: { text: "Sales", align: "left" },
+      grid: { borderColor: "#ccc" },
+      xaxis: {
+        categories: [],
+        title: { text: "Date" }
+      },
+      yaxis: {
+        title: { text: "Sales" },
+        min: 0,
+      },
+    },
+    series: [{ name: "Sales", data: [] }]
+  })
+
+  useEffect(() => {
+    if (salesDetails) {
+      const formattedSalesData = salesDetails.map((item) => ({
+        x: item._id,
+        y: item.totalSales
+      }))
+
+      setState((prevState) => ({
+        ...prevState,
+        options: {
+          ...prevState.options,
+          xaxis: {
+            categories: formattedSalesData.map((item) => item.x)
+          }
+        },
+        series: [
+          { name: "Sales", data: formattedSalesData.map((item) => item.y) }
+        ]
+      }))
+    }
+  }, [salesDetails])
+
+  return <>
+    <AdminMenu />
+    <section className="xl:ml-[4rem] md:ml-[0rem] ">
+      <div className="w-[80%] flex justify-around flex-wrap">
+        {/* Sales Card */}
+        <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
+          <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">$</div>
+          <p className="mt-5">Sales</p>
+          <h1 className="text-xl font-bold">
+            $ {isLoading ? <Loader /> : sales?.totalSales?.toFixed(2)}
+          </h1>
+        </div>
+
+        {/* Customers Card */}
+        <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
+          <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">U</div>
+          <p className="mt-5">Customers</p>
+          <h1 className="text-xl font-bold">
+            {loadingCustomers ? <Loader /> : customers?.length}
+          </h1>
+        </div>
+
+        {/* Orders Card */}
+        <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
+          <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">O</div>
+          <p className="mt-5">All Orders</p>
+          <h1 className="text-xl font-bold">
+            {loadingOrders ? <Loader /> : orders?.totalOrders}
+          </h1>
+        </div>
+      </div>
+
+      <div className="ml-[10rem] mt-[4rem] ">
+        <Chart options={state.options} series={state.series} type="line" width='70%' />
+      </div>
+
+      <div className="mt-[4rem]">
+        <OrderList />
+      </div>
+    </section>
+  </>;
+}
+
+export default AdminDashboard;
