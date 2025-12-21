@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",                     // Keep this for local testing
-    "https://ecommerce-sand-alpha.vercel.app"  // <--- PASTE IT HERE (Add https://)
+    "https://ecommerce-gamma-nine-80.vercel.app/"  // <--- PASTE IT HERE (Add https://)
   ],
   credentials: true
 }));
