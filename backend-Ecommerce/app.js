@@ -15,7 +15,8 @@ app.use(cors({
     "http://localhost:5173",                     // Keep this for local testing
     "https://frontend-beta-azure-94.vercel.app"  // <--- PASTE IT HERE (Add https://)
   ],
-  credentials: true
+  credentials: true,
+  allowedHeaders: ["Authorization", "Content-Type"],
 }));
 // app.use(formidable());
 
