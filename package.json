@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config backend-Ecommerce/index.js",
     "backend": "nodemon --experimental-json-modules -r dotenv/config backend-Ecommerce/index.js",
     "frontend": "npm run dev --prefix Frontend-Ecommerce",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
