@@ -1,8 +1,7 @@
-// require('dotenv').config();
-
+import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import {DB_NAME} from "../constants.js"
-
+dotenv.config({ path: './backend-Ecommerce/.env' })
 const connectDB = async () => {
   try {
     const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);

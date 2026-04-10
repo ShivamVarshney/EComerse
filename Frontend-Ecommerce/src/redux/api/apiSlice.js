@@ -3,7 +3,7 @@ import {fetchBaseQuery ,createApi} from '@reduxjs/toolkit/query/react'
 
 const baseQuery = fetchBaseQuery({
 
-  baseUrl :'https://eccomerceproject-1.onrender.com',
+  baseUrl :'http://localhost:5000',
   credentials: 'include',
 })
 

@@ -3,10 +3,11 @@ import cookieParser from "cookie-parser";
 import formidable from "express-formidable";
 import path from "path";
 import cors from 'cors'
-
+import dotenv from 'dotenv'
 const app = express();
 
 app.use(express.json({ limit: "16kb" }));
+dotenv.config({ path: './backend-Ecommerce/.env' });
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
