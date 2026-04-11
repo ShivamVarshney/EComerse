@@ -227,7 +227,52 @@ const fetchNewProducts = asyncHandler(async (req, res) => {
   const products = await Product.find().sort({ _id: -1 }).limit(5);
   res.json(products);
 });
+const addProductReview = asyncHandler(async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
 
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    if (!req.user) {
+      return res.status(401).json({ error: "Not authorized" });
+    }
+
+    const userId = req.user._id;
+
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user?.toString() === userId.toString()
+    );
+
+    if (alreadyReviewed) {
+      return res.status(400).json({ error: "Already reviewed" });
+    }
+
+    const review = {
+      name: req.user.username || "User",
+      rating: Number(rating),
+      comment,
+      user: userId,
+    };
+
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+
+    const total = product.reviews.reduce((acc, item) => acc + item.rating, 0);
+
+    product.rating = total / product.reviews.length;
+
+    await product.save();
+
+    res.status(201).json({ message: "Review added" });
+
+  } catch (error) {
+    console.log("REVIEW ERROR:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // ===================== EXPORT =====================
 export {
