@@ -32,7 +32,7 @@ function Shop() {
 
   useEffect(()=>{
     if(!checked.length || !radio.length){
-      if(!filteredProductQuery.isLoading){
+      if(!filteredProductQuery.isLoading && filteredProductQuery.data){
         // filter products based on both checked categories and price filter
 
         const filteredProducts = filteredProductQuery.data.filter((product)=>{
@@ -44,10 +44,10 @@ function Shop() {
         dispatch(setProducts(filteredProducts));
       }
     }
-  },[filteredProductQuery.data, filteredProductQuery.isLoading, dispatch, priceFilter])
+  },[filteredProductQuery.data, filteredProductQuery.isLoading, dispatch, priceFilter, checked, radio])
 
   const handleBrandClick = (brand) => {
-    const  productsByBrand = filteredProductQuery.data?.filter((product)=> product.brand === brand);
+    const productsByBrand = filteredProductQuery.data?.filter((product) => product.brand === brand) || [];
     dispatch(setProducts(productsByBrand))
   };
 
@@ -58,11 +58,17 @@ function Shop() {
 
   // Add All Brands option to unique brand;
 
-  const uniqueBrands = [
-    ...Array.from(
-      new Set(filteredProductQuery.data?.map((product) => product.brand).filter((brand)=> brand !== undefined))
-    )
-  ];
+  const uniqueBrands = filteredProductQuery.data
+    ? [
+        ...Array.from(
+          new Set(
+            filteredProductQuery.data
+              .map((product) => product.brand)
+              .filter((brand) => brand !== undefined)
+          )
+        ),
+      ]
+    : [];
 
   const handlePriceChange = e =>{
     // upadate the price gilter atate when the user types in the input feild 

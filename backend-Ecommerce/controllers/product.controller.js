@@ -208,15 +208,18 @@ const addProductReview = asyncHandler(async(req,res)=>{
   }
 })
 
-const fetchTopProducts = asyncHandler(async(req,res)=>{
-  const products = await Product.find({}).sort({rating : -1}).limit(4)
-  if(products){
-  res.json(products)}
-  else{
-    res.status(400)
-    .json('Products are not found')
+const fetchTopProducts = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find({})
+      .sort({ rating: -1 })
+      .limit(4);
+
+    res.json(products || []);
+  } catch (error) {
+    console.error("Top Products Error:", error);
+    res.status(500).json({ message: "Server Error in Top Products" });
   }
-})
+});
 
 const fetchNewProducts = asyncHandler(async(req,res)=>{
   try {
@@ -233,8 +236,9 @@ const filterProducts = asyncHandler(async(req, res)=>{
     const { checked , radio} = req.body
     let args = {}
 
-    if(checked.length  > 0) args.category = checked
-    if(radio.length ) args.price = {$gte : radio[0] , $lte : radio[1]}
+    // Handle undefined or empty arrays safely
+    if(checked && checked.length  > 0) args.category = checked
+    if(radio && radio.length > 0) args.price = {$gte : radio[0] , $lte : radio[1]}
 
     const products = await Product.find(args)
     res.json(products)
