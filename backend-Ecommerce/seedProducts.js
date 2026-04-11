@@ -23,7 +23,7 @@ const sampleProducts = [
     brand: "SoundMax",
     countInStock: 50,
     images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"],
-    ratings: 4.5,
+    rating: 4.5,
     numReviews: 10,
   },
   {
@@ -34,7 +34,7 @@ const sampleProducts = [
     brand: "TechWear",
     countInStock: 30,
     images: ["https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"],
-    ratings: 4.8,
+    rating: 4.8,
     numReviews: 25,
   },
   {
@@ -45,7 +45,7 @@ const sampleProducts = [
     brand: "SportX",
     countInStock: 100,
     images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"],
-    ratings: 4.6,
+    rating: 4.6,
     numReviews: 40,
   },
   {
@@ -56,7 +56,7 @@ const sampleProducts = [
     brand: "TravelPro",
     countInStock: 75,
     images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400"],
-    ratings: 4.3,
+    rating: 4.3,
     numReviews: 15,
   },
   {
@@ -67,7 +67,7 @@ const sampleProducts = [
     brand: "TechGear",
     countInStock: 200,
     images: ["https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400"],
-    ratings: 4.4,
+    rating: 4.4,
     numReviews: 30,
   }
 ];
