@@ -9,8 +9,8 @@ export default defineConfig({
     react(),
   ],
   server:{
-    proxy:{
-      "/api/":"http://localhost:5000",
-    }
+  proxy:{
+    "/api/":"http://localhost:5000",
   }
+}
 })

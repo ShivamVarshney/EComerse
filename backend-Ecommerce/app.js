@@ -13,8 +13,8 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(cors({
   origin: [
-    "http://localhost:5173",                     // Keep this for local testing
-    "https://frontend-beta-azure-94.vercel.app"  // <--- PASTE IT HERE (Add https://)
+    "http://localhost:5173",
+    "https://e-commerse-platforms.onrender.com"
   ],
   credentials: true,
   allowedHeaders: ["Authorization", "Content-Type"],
