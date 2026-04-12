@@ -14,8 +14,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://e-commerse-platforms.onrender.com",
-    "https://backends-o12k.onrender.com"
+   "https://ecomerce-platform.onrender.com/"
   ],
   credentials: true,
   allowedHeaders: ["Authorization", "Content-Type"],
