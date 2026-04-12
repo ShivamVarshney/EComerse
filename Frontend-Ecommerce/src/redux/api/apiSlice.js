@@ -1,15 +1,12 @@
-import {fetchBaseQuery ,createApi} from '@reduxjs/toolkit/query/react'
-// import { BASE_URL } from '../constants.js'
+import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-
-  baseUrl: 'https://ecomerse-3.onrender.com',
-  credentials: 'include',
-})
+  baseUrl: "https://backends-o12k.onrender.com/api/v1",
+  credentials: "include",
+});
 
 export const apiSlice = createApi({
   baseQuery,
-  
-  tagTypes:['Product' , 'Orders' ,'User','Category'],
-  endpoints:()=>({}),
-})
+  tagTypes: ["Product", "Orders", "User", "Category"],
+  endpoints: () => ({}),
+});

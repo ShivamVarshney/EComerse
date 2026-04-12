@@ -24,7 +24,7 @@ router
   .route("/")
   .get(fetchProducts)
   .post(authenticate, authorizeAdmin, upload.array("images", 5), addProduct);
-router.route("/allproducts").get(fetchAllProducts);
+router.route("/allProducts").get(fetchAllProducts);
 router.route("/:id/reviews").post(authenticate, checkId, addProductReview);
 router.get("/top", fetchTopProducts);
 router.get("/new", fetchNewProducts);

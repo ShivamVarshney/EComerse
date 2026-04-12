@@ -1,82 +1,90 @@
 import { apiSlice } from "./apiSlice";
-import { ORDERS_URL,PAYPAL_URL } from "../constants";
+import { ORDERS_URL, PAYPAL_URL } from "../constants";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
-  endpoints : (builder)=>({
-    createOrder : builder.mutation({
-      query : (order) => ({
-        url : ORDERS_URL,
-        method : 'POST',
-        body : order
-      })
-    }),
-    getOrderDetails : builder.query({
-      query : (id) =>({
-        url : `${ORDERS_URL}/${id}`,
-      })
-    }),
+  endpoints: (builder) => ({
 
-    payOrder : builder.mutation({
-      query : ({orderId,details})=>({
-        url : `${ORDERS_URL}/${orderId}/pay`,
-        method : 'PUT',
-        body : details,
-      })
-    }),
-
-    getPaypalClientId : builder.query({
-      query : ()=>({
-        url : PAYPAL_URL
-      })
-    }),
-
-    getMyOrders : builder.query({
-      query : ()=>({
-        url : `${ORDERS_URL}/mine`
+    // CREATE ORDER
+    createOrder: builder.mutation({
+      query: (order) => ({
+        url: ORDERS_URL,
+        method: "POST",
+        body: order,
       }),
-      keepUnusedDataFor :5
     }),
 
-    getOrders : builder.query({
-      query:()=>({
-        url : ORDERS_URL,
-      })
+    // GET ORDER DETAILS
+    getOrderDetails: builder.query({
+      query: (id) => ({
+        url: `${ORDERS_URL}/${id}`,
+      }),
     }),
 
-  deliverOrder : builder.mutation({
-  query:(orderId)=>({
-    url: `${ORDERS_URL}/${orderId}/deliver`, // <--- ADD THIS
-    method : 'PUT',
-  })
-}),
-
-    getTotalOrders : builder.query({
-      query : () => `${ORDERS_URL}/total-orders`
+    // PAY ORDER
+    payOrder: builder.mutation({
+      query: ({ orderId, details }) => ({
+        url: `${ORDERS_URL}/${orderId}/pay`,
+        method: "PUT",
+        body: details,
+      }),
     }),
 
-    getTotalSales : builder.query({
-      query : ()=>`${ORDERS_URL}/total-sales`
+    // PAYPAL CLIENT ID
+    getPaypalClientId: builder.query({
+      query: () => ({
+        url: PAYPAL_URL,
+      }),
     }),
 
+    // MY ORDERS
+    getMyOrders: builder.query({
+      query: () => ({
+        url: `${ORDERS_URL}/mine`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+
+    // ALL ORDERS (ADMIN)
+    getOrders: builder.query({
+      query: () => ({
+        url: ORDERS_URL,
+      }),
+    }),
+
+    // DELIVER ORDER
+    deliverOrder: builder.mutation({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}/deliver`,
+        method: "PUT",
+      }),
+    }),
+
+    // TOTAL ORDERS
+    getTotalOrders: builder.query({
+      query: () => `${ORDERS_URL}/total-orders`,
+    }),
+
+    // TOTAL SALES
+    getTotalSales: builder.query({
+      query: () => `${ORDERS_URL}/total-sales`,
+    }),
+
+    // SALES BY DATE
     getTotalSalesByDate: builder.query({
-      query :()=> `${ORDERS_URL}/total-sales-by-date`
-    })
-
-
-  })
+      query: () => `${ORDERS_URL}/total-sales-by-date`,
+    }),
+  }),
 });
 
 export const {
-useGetTotalOrdersQuery,
-useGetTotalSalesQuery,
-useGetTotalSalesByDateQuery,
-// - -----------------------
-
-useCreateOrderMutation,
-useGetOrderDetailsQuery,
-usePayOrderMutation,
-useGetPaypalClientIdQuery,
-useGetMyOrdersQuery,
-useDeliverOrderMutation,
-useGetOrdersQuery,
-} = orderApiSlice
+  useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPaypalClientIdQuery,
+  useGetMyOrdersQuery,
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
+  useGetTotalOrdersQuery,
+  useGetTotalSalesQuery,
+  useGetTotalSalesByDateQuery,
+} = orderApiSlice;

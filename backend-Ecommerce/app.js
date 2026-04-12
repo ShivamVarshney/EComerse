@@ -14,7 +14,8 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://e-commerse-platforms.onrender.com"
+    "https://e-commerse-platforms.onrender.com",
+    "https://backends-o12k.onrender.com"
   ],
   credentials: true,
   allowedHeaders: ["Authorization", "Content-Type"],
@@ -37,6 +38,11 @@ app.use("/api/v1/orders", ordersRoutes);
 
 app.get("/api/v1/config/paypal", (req, res) => {
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
+});
+
+// Handle 404 - return JSON instead of HTML
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
 
 export { app };

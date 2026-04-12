@@ -4,7 +4,7 @@ import Product from './models/product.model.js';
 import Category from './models/category.model.js';
 import { DB_NAME } from './constants.js';
 
-dotenv.config({ path: './backend-Ecommerce/.env' });
+dotenv.config();
 
 const sampleCategories = [
   { name: "Electronics" },
@@ -74,7 +74,7 @@ const sampleProducts = [
 
 const seedDatabase = async () => {
   try {
-    await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
     console.log('Connected to MongoDB');
 
     // Clear existing data
